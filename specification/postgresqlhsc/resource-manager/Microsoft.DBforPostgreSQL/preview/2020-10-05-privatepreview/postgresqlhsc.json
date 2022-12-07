@@ -1099,6 +1099,46 @@
         }
       }
     },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBForPostgreSql/serverGroupsv2/{serverGroupName}/databases/{databaseName}": {
+      "put": {
+        "description": "Creates a new database in Cluster",
+        "tags": [
+          "Databases"
+        ],
+        "operationId": "Databases_Create",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ServerGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/DatabaseNameParameter"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DatabaseResult"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+    },
     "/subscriptions/{subscriptionId}/providers/Microsoft.DBForPostgreSql/checkNameAvailability": {
       "post": {
         "description": "Check the availability of name for resource",
@@ -1598,6 +1638,14 @@
         "enableMx": {
           "type": "boolean",
           "description": "If Citus MX is enabled or not for the server group.",
+          "x-ms-mutability": [
+            "create",
+            "read"
+          ]
+        },
+        "preprovision": {
+          "type": "boolean",
+          "description": "If Cluster creation should be using pre-provisioned clusters instead",
           "x-ms-mutability": [
             "create",
             "read"
@@ -2128,6 +2176,15 @@
         }
       }
     },
+    "DatabaseResult": {
+      "description": "Successful database creation result",
+      "properties": {
+        "database_name": {
+          "type": "string",
+          "description": "Name of the database"
+        }
+      }
+    },
     "NameAvailabilityRequest": {
       "description": "Request from client to check resource name availability.",
       "properties": {
@@ -2257,6 +2314,14 @@
       "required": true,
       "type": "string",
       "description": "The name of the server group role name.",
+      "x-ms-parameter-location": "method"
+    },
+    "DatabaseNameParameter": {
+      "name": "databaseName",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The name of database in cluster.",
       "x-ms-parameter-location": "method"
     }
   }
